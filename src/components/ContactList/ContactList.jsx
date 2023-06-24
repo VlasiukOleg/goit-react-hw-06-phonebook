@@ -1,28 +1,32 @@
-import PropTypes from 'prop-types';
 import { Contacts, ContactsItem, IconDelete } from './ContactList.styled';
 
-export const ContactList = ({ contacts, onDeleteContact }) => {
+import { useDispatch, useSelector } from 'react-redux';
+import { getContacts, getFilter } from 'redux/selectors';
+import { deleteContact } from 'redux/phoneBookSlice';
+
+export const ContactList = () => {
+  const contacts = useSelector(getContacts);
+  const filterValue = useSelector(getFilter);
+
+  const dispatch = useDispatch();
+
+  const visibleContacts = contacts.filter(contact =>
+    contact.name.toLocaleLowerCase().includes(filterValue.toLocaleLowerCase())
+  );
+
   return (
     <Contacts>
-      {contacts.map(contact => (
+      {visibleContacts.map(contact => (
         <ContactsItem key={contact.id}>
           {contact.name} : {contact.number}
-          <button type="button" onClick={() => onDeleteContact(contact.id)}>
+          <button
+            type="button"
+            onClick={() => dispatch(deleteContact(contact.id))}
+          >
             <IconDelete />
           </button>
         </ContactsItem>
       ))}
     </Contacts>
   );
-};
-
-ContactList.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.exact({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    })
-  ),
-  onDeleteContact: PropTypes.func,
 };

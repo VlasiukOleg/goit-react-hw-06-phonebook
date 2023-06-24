@@ -1,7 +1,15 @@
-import PropTypes from 'prop-types';
 import { FilterInput } from './ContactFilter.styled';
+import { useDispatch } from 'react-redux';
 
-export const ContactFilter = ({ filter, onChangeFilter }) => {
+import { changeFilter } from 'redux/phoneBookSlice';
+
+export const ContactFilter = () => {
+  const dispatch = useDispatch();
+
+  const onChangeFilter = e => {
+    dispatch(changeFilter(e.currentTarget.value));
+  };
+
   return (
     <FilterInput>
       <span>Find contacts by name</span>
@@ -9,14 +17,9 @@ export const ContactFilter = ({ filter, onChangeFilter }) => {
       <input
         type="text"
         name="filter"
-        value={filter}
+        // value={filter}
         onChange={onChangeFilter}
       />
     </FilterInput>
   );
-};
-
-ContactFilter.propTypes = {
-  filter: PropTypes.string,
-  onChangeFilter: PropTypes.func,
 };

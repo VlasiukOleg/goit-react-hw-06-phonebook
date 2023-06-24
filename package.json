@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://VlasiukOleg.github.io/goit-react-hw-06-phonebook/",
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.5",
     "@testing-library/jest-dom": "^5.16.3",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
@@ -14,7 +15,9 @@
     "react-dom": "^18.1.0",
     "react-hook-form": "^7.44.3",
     "react-icons": "^4.8.0",
+    "react-redux": "^8.1.1",
     "react-scripts": "5.0.1",
+    "redux-persist": "^6.0.0",
     "shortid": "^2.2.16",
     "styled-components": "^5.3.10",
     "web-vitals": "^2.1.3"

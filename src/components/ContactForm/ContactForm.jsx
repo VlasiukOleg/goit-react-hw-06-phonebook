@@ -1,11 +1,17 @@
-import shortid from 'shortid';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import PropTypes from 'prop-types';
 import { PhoneBookForm, AddButton, Message } from './ContactForm.styled';
 
 import { useForm } from 'react-hook-form';
 
-export const ContactForm = ({ contacts, onAddContact }) => {
+import { useDispatch, useSelector } from 'react-redux';
+
+import { addContact } from 'redux/phoneBookSlice';
+import { getContacts } from 'redux/selectors';
+
+export const ContactForm = () => {
+  const dispatch = useDispatch();
+  const contacts = useSelector(getContacts);
+
   const {
     register,
     handleSubmit,
@@ -14,19 +20,18 @@ export const ContactForm = ({ contacts, onAddContact }) => {
   } = useForm();
 
   const onSubmit = data => {
-    for (const contact of contacts) {
-      if (contact.name === data.name) {
-        Notify.warning(`${contact.name} is already in contact`);
-        reset();
-        return;
+    if (contacts.length > 0) {
+      for (const contact of contacts) {
+        if (contact.name === data.name) {
+          Notify.warning(`${contact.name} is already in contact`);
+          reset();
+          return;
+        }
       }
     }
 
-    onAddContact({
-      id: shortid.generate(),
-      name: data.name,
-      number: data.number,
-    });
+    dispatch(addContact(data.name, data.number));
+
     reset();
   };
 
@@ -72,15 +77,4 @@ export const ContactForm = ({ contacts, onAddContact }) => {
       <AddButton type="submit">Add contact</AddButton>
     </PhoneBookForm>
   );
-};
-
-ContactForm.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.exact({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    })
-  ),
-  onAddContact: PropTypes.func,
 };
