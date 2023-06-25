@@ -4,14 +4,13 @@ import shortid from 'shortid';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-const phoneBookInitialState = {
+const contactsInitialState = {
   contacts: [],
-  filter: '',
 };
 
-const phoneBookSlice = createSlice({
-  name: 'phonebook',
-  initialState: phoneBookInitialState,
+const contactsSlice = createSlice({
+  name: 'contacts',
+  initialState: contactsInitialState,
   reducers: {
     addContact: {
       reducer(state, action) {
@@ -32,22 +31,17 @@ const phoneBookSlice = createSlice({
         contact => contact.id !== action.payload
       );
     },
-    changeFilter: (state, action) => {
-      state.filter = action.payload;
-    },
   },
 });
 
-export const { addContact, deleteContact, changeFilter } =
-  phoneBookSlice.actions;
+export const { addContact, deleteContact } = contactsSlice.actions;
 
 const persistConfig = {
   key: 'contacts',
   storage,
-  whitelist: ['contacts'],
 };
 
-export const counterReducer = persistReducer(
+export const contactsReducer = persistReducer(
   persistConfig,
-  phoneBookSlice.reducer
+  contactsSlice.reducer
 );

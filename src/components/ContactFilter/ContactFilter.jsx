@@ -1,7 +1,7 @@
 import { FilterInput } from './ContactFilter.styled';
 import { useDispatch } from 'react-redux';
 
-import { changeFilter } from 'redux/phoneBookSlice';
+import { changeFilter } from 'redux/filterSlice';
 
 export const ContactFilter = () => {
   const dispatch = useDispatch();

@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { addContact } from 'redux/phoneBookSlice';
+import { addContact } from 'redux/contactsSlice';
 import { getContacts } from 'redux/selectors';
 
 export const ContactForm = () => {
